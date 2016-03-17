@@ -4,8 +4,7 @@
   <div class="form-inputs">
     <div class="row">
       <div class="col-md-6">
-        <%= f.input :name, input_html: { autofocus: true } %>
-        <%= f.input :lastname %>
+        <%= f.input :username, input_html: { autofocus: true } %>
         <%= f.input :email, required: true %>
 
         <% if ['new', 'create'].include?(action_name) %>

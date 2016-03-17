@@ -1,8 +1,7 @@
 Fabricator(:user) do
-  name { Faker::Name.first_name }
-  lastname { Faker::Name.last_name }
+  username { Faker::Name.first_name }
   email { |attrs|
-    Faker::Internet.email([attrs[:name], sequence(:user_id)].join(' '))
+    Faker::Internet.email([attrs[:username], sequence(:user_id)].join(' '))
   }
   password { Faker::Lorem.sentence }
   password_confirmation { |attrs| attrs[:password] }

@@ -4,11 +4,9 @@
   <div class="form-inputs">
     <div class="row">
       <div class="col-md-6">
-        <%= f.input :user_ids %>
         <%= f.input :name %>
-        <%= f.input :owner_id %>
-        <%= f.input :latitude %>
-        <%= f.input :longitude %>
+        <%= f.input :latitude, as: :hidden %>
+        <%= f.input :longitude, as: :hidden %>
       </div>
     </div>
   </div>

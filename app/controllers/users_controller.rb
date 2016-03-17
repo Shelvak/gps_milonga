@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def index
     @title = t 'view.users.index_title'
     @searchable = true
-    @users = @users.filtered_list(params[:q]).order(:lastname).page(params[:page])
+    @users = @users.filtered_list(params[:q]).order(username: :asc).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(
-      :name, :lastname, :email, :password, :password_confirmation, :role, :remember_me, :lock_version
+      :username, :email, :password, :password_confirmation, :role, :remember_me, :lock_version
     )
   end
 end

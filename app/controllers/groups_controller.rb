@@ -26,7 +26,7 @@ class GroupsController < ApplicationController
   # POST /groups
   def create
     @title = t('view.groups.new_title')
-    @group = Group.new(group_params)
+    @group = Group.new(create_group_params)
 
     respond_to do |format|
       if @group.save
@@ -42,7 +42,7 @@ class GroupsController < ApplicationController
     @title = t('view.groups.edit_title')
 
     respond_to do |format|
-      if @group.update(group_params)
+      if @group.update(update_group_params)
         format.html { redirect_to @group, notice: t('view.groups.correctly_updated') }
       else
         format.html { render action: 'edit' }
@@ -64,7 +64,13 @@ class GroupsController < ApplicationController
       @group = Group.find(params[:id])
     end
 
-    def group_params
-      params.require(:group).permit(:user_ids, :name, :owner_id, :latitude, :longitude)
+    def create_group_params
+      _params = params.require(:group).permit(:name)
+      _params[:owner_id] = current_user.id
+      _params
+    end
+
+    def update_group_params
+      params.require(:group).permit(:name, :longitude, :latitude)
     end
 end

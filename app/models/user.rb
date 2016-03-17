@@ -4,18 +4,37 @@ class User < ActiveRecord::Base
 
   has_paper_trail
 
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable,
-    :validatable
+  attr_accessor :login
 
-  # Default order
-  default_scope { order("#{table_name}.lastname ASC") }
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable,
+    :validatable, :registerable
 
   # Validations
-  validates :name, presence: true
-  validates :name, :lastname, :email, length: { maximum: 255 }, allow_nil: true,
+  validates :username, presence: true, uniqueness: true
+  validates :username, :email, length: { maximum: 255 }, allow_nil: true,
     allow_blank: true
 
   def to_s
-    [self.name, self.lastname].compact.join(' ')
+    self.username
+  end
+
+  def login=(login)
+    @login = login
+  end
+
+  def login
+    @login || self.username || self.email
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_h).where(
+        'lower(username) = :value OR lower(email) = :value',
+        value: login.downcase
+      ).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_h).first
+    end
   end
 end

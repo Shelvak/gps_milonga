@@ -7,19 +7,19 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should get index' do
     sign_in @user
-    
+
     get :index
     assert_response :success
     assert_not_nil assigns(:users)
     assert_select '#unexpected_error', false
     assert_template 'users/index'
   end
-  
+
   test 'should get filtered index' do
     sign_in @user
-    
-    3.times { Fabricate(:user, lastname: 'in_filtered_index') }
-    
+
+    3.times { Fabricate(:user, username: 'in_filtered_index') }
+
     get :index, q: 'filtered_index'
     assert_response :success
     assert_not_nil assigns(:users)
@@ -32,7 +32,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should get new' do
     sign_in @user
-    
+
     get :new
     assert_response :success
     assert_not_nil assigns(:user)
@@ -42,10 +42,10 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should create user' do
     sign_in @user
-    
+
     assert_difference('User.count') do
       post :create, user: Fabricate.attributes_for(:user).slice(
-        :name, :lastname, :email, :password, :password_confirmation, :role, :remember_me, :lock_version
+        :username, :email, :password, :password_confirmation, :role, :remember_me, :lock_version
       )
     end
 
@@ -54,7 +54,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should show user' do
     sign_in @user
-    
+
     get :show, id: @user
     assert_response :success
     assert_not_nil assigns(:user)
@@ -64,7 +64,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should get edit' do
     sign_in @user
-    
+
     get :edit, id: @user
     assert_response :success
     assert_not_nil assigns(:user)
@@ -74,28 +74,28 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should update user' do
     sign_in @user
-    
+
     assert_no_difference 'User.count' do
-      patch :update, id: @user, user: Fabricate.attributes_for(:user, name: 'Upd')
+      patch :update, id: @user, user: Fabricate.attributes_for(:user, username: 'Upd')
     end
-    
+
     assert_redirected_to user_url(assigns(:user))
-    assert_equal 'Upd', @user.reload.name
+    assert_equal 'Upd', @user.reload.username
   end
 
   test 'should destroy user' do
     sign_in @user
-    
+
     assert_difference('User.count', -1) do
       delete :destroy, id: @user
     end
 
     assert_redirected_to users_url
   end
-  
+
   test 'should get edit profile' do
     sign_in @user
-    
+
     get :edit_profile, id: @user
     assert_response :success
     assert_not_nil assigns(:user)
@@ -103,24 +103,24 @@ class UsersControllerTest < ActionController::TestCase
     assert_select '#unexpected_error', false
     assert_template 'users/edit_profile'
   end
-  
+
   test 'should update user profile' do
     sign_in @user
-    
+
     assert_no_difference 'User.count' do
       patch :update_profile, id: @user,
-        user: Fabricate.attributes_for(:user, name: 'Upd')
+        user: Fabricate.attributes_for(:user, username: 'Upd')
     end
-    
+
     assert_redirected_to edit_profile_user_url(assigns(:user))
-    assert_equal 'Upd', @user.reload.name
+    assert_equal 'Upd', @user.reload.username
   end
-  
+
   test 'should not edit someone else profile' do
     another_user = Fabricate(:user)
-    
+
     sign_in @user
-    
+
     get :edit_profile, id: another_user
     assert_response :success
     assert_not_nil assigns(:user)
@@ -129,19 +129,19 @@ class UsersControllerTest < ActionController::TestCase
     assert_select '#unexpected_error', false
     assert_template 'users/edit_profile'
   end
-  
+
   test 'should not update someone else profile' do
     another_user = Fabricate(:user)
-    
+
     sign_in @user
-    
+
     assert_no_difference 'User.count' do
       patch :update_profile, id: another_user,
-        user: Fabricate.attributes_for(:user, name: 'Upd')
+        user: Fabricate.attributes_for(:user, username: 'Upd')
     end
-    
+
     assert_redirected_to edit_profile_user_url(assigns(:user))
-    assert_not_equal 'Upd', another_user.reload.name
-    assert_equal 'Upd', @user.reload.name
+    assert_not_equal 'Upd', another_user.reload.username
+    assert_equal 'Upd', @user.reload.username
   end
 end

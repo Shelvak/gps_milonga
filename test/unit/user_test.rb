@@ -71,22 +71,19 @@ class UserTest < ActiveSupport::TestCase
 
   test 'validates length of _long_ attributes' do
     @user.name = 'abcde' * 52
-    @user.lastname = 'abcde' * 52
     @user.email = "#{'abcde' * 52}@test.com"
 
     assert @user.invalid?
-    assert_equal 3, @user.errors.count
-    [:name, :lastname, :email].each do |attr|
+    assert_equal 2, @user.errors.count
+    [:name, :email].each do |attr|
       assert_equal_messages @user, attr, :too_long, count: 255
     end
   end
 
   test 'magick search' do
-    5.times { Fabricate(:user) { name { "magick_name" } } }
-    3.times { Fabricate(:user) { lastname { "magick_lastname" } } }
+    5.times { Fabricate(:user) { username { "magick_name" } } }
     Fabricate(:user) {
-      name { "magick_name" }
-      lastname { "magick_lastname" }
+      username { "magick_name" }
     }
 
     users = User.magick_search('magick')
