@@ -1,0 +1,24 @@
+---
+es:
+  simple_form:
+    error_notification:
+      default_message: "Se encontraron algunos problemas, por favor revise los datos..."
+    labels: &attributes
+      user:
+        email: "Correo"
+        lastname: "Apellido"
+        name: "Nombre"
+        password: "Contraseña"
+        password_confirmation: "Confirmación"
+        remember_me: "Recordarme"
+        role: "Perfil"
+        roles:
+          one: "Perfil"
+          other: "Perfiles"
+    placeholders:
+      <<: *attributes
+    required:
+      mark: "*"
+      text: "requerido"
+    "yes": "Si"
+    "no": "No"

@@ -1,0 +1,16 @@
+es:
+  views:
+    pagination:
+      next: "Siguiente &rsaquo;"
+      truncate: "&hellip;"
+      previous: "&lsaquo; Anterior"
+      first: "&laquo;"
+      last: "&raquo;"
+  helpers:
+    page_entries_info:
+      one_page:
+        one: "Viendo <strong>un</strong> %{model}"
+        other: "Viendo los <strong>%{count}</strong> %{model}"
+        zero: "Sin resultados"
+      more_pages:
+        display_entries: "Viendo <strong>%{from}-%{to}</strong> de un total de <strong>%{count}</strong>"

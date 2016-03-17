@@ -1,0 +1,18 @@
+<%%= simple_form_for(@<%= singular_table_name %>) do |f| %>
+  <%%= render 'shared/error_explanation', f: f %>
+
+  <div class="form-inputs">
+    <div class="row">
+      <div class="col-md-6">
+      <%- attributes.each do |attribute| -%>
+        <%%= f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %> %>
+      <%- end -%>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-footer">
+    <div class="pull-right"><%%= yield :form_actions %></div>
+    <%%= f.submit class: 'btn btn-primary' %>
+  </div>
+<%% end %>

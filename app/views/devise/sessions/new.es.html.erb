@@ -1,0 +1,16 @@
+<% @title = 'Inicio de sesión' %>
+
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="form-inputs">
+    <%= f.input :email, input_html: { autofocus: true } %>
+    <%= f.input :password %>
+    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+  </div>
+
+  <div class="panel-footer">
+    <%= show_button_dropdown(
+      f.submit('Ingresar', class: 'btn btn-material-teal'),
+      devise_links_es
+    ) %>
+  </div>
+<% end %>

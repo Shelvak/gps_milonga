@@ -1,0 +1,35 @@
+<% if @users.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table resource-list">
+        <thead>
+          <tr>
+            <th><%= User.human_attribute_name 'name' %></th>
+            <th><%= User.human_attribute_name 'lastname' %></th>
+            <th>
+              <span class="visible-md visible-lg">
+                <%= User.human_attribute_name 'email' %>
+              </span>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <%= render @users %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <%= paginate @users %>
+<% end %>
+
+<nav class="form-actions">
+  <%= link_to(
+    t('view.users.new', default: :'label.new'),
+    new_user_path, class: 'btn btn-primary'
+    ) if can? :create, User
+  %>
+</nav>
