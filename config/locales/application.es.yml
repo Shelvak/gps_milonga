@@ -4,6 +4,9 @@
   attributes:
     created_at: 'Creación'
     updated_at: 'Actualización'
+    latitude: 'Latitud'
+    longitude: 'Longitud'
+    user_id: 'Usuario'
 
   activerecord:
     models:
@@ -55,6 +58,28 @@
       empty_search:
         title:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
+    groups:
+      index_title: 'Listado de grupos'
+      show_title: 'Detalle de grupo'
+      new_title: 'Nuevo grupo'
+      edit_title: 'Modificar grupo'
+      correctly_created: 'Grupo agregado correctamente.'
+      correctly_updated: 'Grupo actualizado correctamente.'
+      stale_object_error: 'El grupo no pudo ser actualizado, intente nuevamente.'
+      empty_index:
+        html: 'No se ha creado ningún grupo hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo usuario</span>'
+      new: 'Nuevo grupo'
+    locations:
+      index_title: 'Listado de ubicaciones'
+      show_title: 'Detalle de ubicación'
+      new_title: 'Nueva ubicación'
+      edit_title: 'Modificar ubicación'
+      correctly_created: 'Ubicación agregada correctamente.'
+      correctly_updated: 'Ubicación actualizada correctamente.'
+      stale_object_error: 'La ubicación no pudo ser actualizada, intente nuevamente.'
+      empty_index:
+        html: 'No se ha creado ninguna ubicación hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva ubicación</span>'
+      new: 'Nueva ubicación'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'
