@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :groups, :invitations, :locations
+  resources :invitations, :locations
+  resources :groups do
+    get :near_people, on: :member
+  end
+
   devise_for :users
 
   resources :users do

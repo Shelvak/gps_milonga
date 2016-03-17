@@ -3,7 +3,13 @@ new Rule({
         return $('#map').length;
     },
     load: function() {
-        var helper = {};
+        var helper = {},
+            configs = {};
+
+        helper.setPointValues = function(point) {
+            $('#group_latitude').val(point.lat());
+            $('#group_longitude').val(point.lng());
+        };
 
         helper.getPosition = function() {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -20,7 +26,7 @@ new Rule({
                         map: map,
                         position: mapPosition,
                         draggable: true,
-                        title: 'Milonga'
+                        title: 'Milonga place'
                     },
                     marker = new google.maps.Marker(optionsMarker);
 
@@ -30,9 +36,7 @@ new Rule({
                     // Center the map at given point
                     map.panTo(point);
                     // Update the textbox
-                    console.log("movido a:")
-                    console.log(point.lat())
-                    console.log(point.lng())
+                    helper.setPointValues(point);
                 });
             });
         };

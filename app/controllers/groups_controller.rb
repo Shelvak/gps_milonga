@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only:  [:show, :edit, :update, :destroy]
+  before_action :set_group, only:  [:show, :edit, :update, :destroy, :near_people]
 
   # GET /groups
   def index
@@ -58,6 +58,12 @@ class GroupsController < ApplicationController
     redirect_to groups_url, notice: t('view.groups.correctly_destroyed')
   end
 
+  def near_people
+    locations = @group.last_locations_except_for_me(current_user)
+
+    render json: locations.to_json
+  end
+
   private
 
     def set_group
@@ -65,7 +71,7 @@ class GroupsController < ApplicationController
     end
 
     def create_group_params
-      _params = params.require(:group).permit(:name)
+      _params = params.require(:group).permit(:name, :longitude, :latitude)
       _params[:owner_id] = current_user.id
       _params
     end

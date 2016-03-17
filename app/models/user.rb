@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   validates :username, :email, length: { maximum: 255 }, allow_nil: true,
     allow_blank: true
 
+  has_many :locations
+
   def to_s
     self.username
   end
