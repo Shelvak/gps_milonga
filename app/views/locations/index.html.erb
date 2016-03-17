@@ -1,0 +1,36 @@
+<% if @locations.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th><%= Location.human_attribute_name 'latitude' %></th>
+        <th><%= Location.human_attribute_name 'longitude' %></th>
+        <th><%= Location.human_attribute_name 'user_id' %></th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @locations.each do |location| %>
+        <tr>
+          <td><%= location.latitude %></td>
+          <td><%= location.longitude %></td>
+          <td><%= location.user_id %></td>
+          <td><%= link_to_show location %></td>
+          <td><%= link_to_edit edit_location_path(location) if can? :update, location %></td>
+          <td><%= link_to_destroy location if can? :destroy, location %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @locations %>
+<% end %>
+
+<div class="panel-footer">
+  <%= link_to(
+    t('view.locations.new', default: :'label.new'),
+    new_location_path, class: 'btn btn-primary'
+  ) if can? :create, Location %>
+</div>

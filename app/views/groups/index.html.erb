@@ -1,0 +1,40 @@
+<% if @groups.empty? %>
+  <%= render 'shared/empty_index' %>
+<% else %>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th><%= Group.human_attribute_name 'user_ids' %></th>
+        <th><%= Group.human_attribute_name 'name' %></th>
+        <th><%= Group.human_attribute_name 'owner_id' %></th>
+        <th><%= Group.human_attribute_name 'latitude' %></th>
+        <th><%= Group.human_attribute_name 'longitude' %></th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @groups.each do |group| %>
+        <tr>
+          <td><%= group.user_ids %></td>
+          <td><%= group.name %></td>
+          <td><%= group.owner_id %></td>
+          <td><%= group.latitude %></td>
+          <td><%= group.longitude %></td>
+          <td><%= link_to_show group %></td>
+          <td><%= link_to_edit edit_group_path(group) if can? :update, group %></td>
+          <td><%= link_to_destroy group if can? :destroy, group %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @groups %>
+<% end %>
+
+<div class="panel-footer">
+  <%= link_to(
+    t('view.groups.new', default: :'label.new'),
+    new_group_path, class: 'btn btn-primary'
+  ) if can? :create, Group %>
+</div>

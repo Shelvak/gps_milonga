@@ -1,0 +1,15 @@
+<h2><%= @invitation %></h2>
+
+<p>
+  <strong><%= Invitation.human_attribute_name 'group_id' %></strong>:
+  <%= @invitation.group_id %>
+</p>
+<p>
+  <strong><%= Invitation.human_attribute_name 'user_id' %></strong>:
+  <%= @invitation.user_id %>
+</p>
+
+<div class="panel-footer">
+  <%= link_to t('label.edit'), edit_invitation_path(@invitation) if can? :update, @invitation %> |
+  <%= link_to t('label.list'), invitations_path %>
+</div>

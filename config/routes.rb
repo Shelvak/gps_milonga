@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :groups
+  resources :invitations
+  resources :locations
   devise_for :users
   
   resources :users do

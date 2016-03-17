@@ -1,0 +1,19 @@
+<h2><%= @location %></h2>
+
+<p>
+  <strong><%= Location.human_attribute_name 'latitude' %></strong>:
+  <%= @location.latitude %>
+</p>
+<p>
+  <strong><%= Location.human_attribute_name 'longitude' %></strong>:
+  <%= @location.longitude %>
+</p>
+<p>
+  <strong><%= Location.human_attribute_name 'user_id' %></strong>:
+  <%= @location.user_id %>
+</p>
+
+<div class="panel-footer">
+  <%= link_to t('label.edit'), edit_location_path(@location) if can? :update, @location %> |
+  <%= link_to t('label.list'), locations_path %>
+</div>

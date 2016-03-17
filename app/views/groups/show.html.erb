@@ -1,0 +1,27 @@
+<h2><%= @group %></h2>
+
+<p>
+  <strong><%= Group.human_attribute_name 'user_ids' %></strong>:
+  <%= @group.user_ids %>
+</p>
+<p>
+  <strong><%= Group.human_attribute_name 'name' %></strong>:
+  <%= @group.name %>
+</p>
+<p>
+  <strong><%= Group.human_attribute_name 'owner_id' %></strong>:
+  <%= @group.owner_id %>
+</p>
+<p>
+  <strong><%= Group.human_attribute_name 'latitude' %></strong>:
+  <%= @group.latitude %>
+</p>
+<p>
+  <strong><%= Group.human_attribute_name 'longitude' %></strong>:
+  <%= @group.longitude %>
+</p>
+
+<div class="panel-footer">
+  <%= link_to t('label.edit'), edit_group_path(@group) if can? :update, @group %> |
+  <%= link_to t('label.list'), groups_path %>
+</div>
