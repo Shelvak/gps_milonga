@@ -200,6 +200,7 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    underscore-rails (1.8.3)
     validates_timeliness (4.0.2)
       timeliness (~> 0.3.7)
     warden (1.2.6)
@@ -243,6 +244,7 @@ DEPENDENCIES
   simple_form
   thin
   uglifier
+  underscore-rails
   validates_timeliness
   web-console (~> 2.0)
 

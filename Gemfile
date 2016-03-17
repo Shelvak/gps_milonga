@@ -22,6 +22,7 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'underscore-rails'
 
 group :development, :test do
   gem 'byebug'

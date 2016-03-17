@@ -15,6 +15,7 @@
 //= require jquery_ujs
 //= require jquery-customs/jquery.ui.datepicker-es
 //= require jquery-customs/jquery-ui-timepicker-addon
+//= require underscore
 //= require inspector
 //= require common
 //= require date_pickers
@@ -22,3 +23,4 @@
 //= require mobile
 //= require users
 //= require bootstrap
+//= require maps
