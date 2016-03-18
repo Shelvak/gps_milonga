@@ -24,3 +24,4 @@
 //= require users
 //= require bootstrap
 //= require maps
+//= require gps

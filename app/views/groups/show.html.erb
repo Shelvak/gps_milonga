@@ -5,13 +5,29 @@
   <%= @group.owner %>
 </p>
 <p>
-  <strong><%= Group.human_attribute_name 'user_ids' %></strong>:
+  <strong><%= Group.human_attribute_name 'user_ids' %></strong>:<br />
   <% @group.users.each do |user| %>
-    - <%= user %>
+    - <%= user %> <br />
   <% end %>
 </p>
+
+<%= link_to 'Donde estan lo vago?', '#', class: 'ask-for-friends btn btn-info' %>
+<span class="spinner hide">Cargando</span>
+
+<div style='width: 100%;'>
+  <div id="map" style='width: 100%; height: 400px;'></div>
+</div>
 
 <div class="panel-footer">
   <%= link_to t('label.edit'), edit_group_path(@group) if can? :update, @group %> |
   <%= link_to t('label.list'), groups_path %>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  var mapConfigs = {
+    groupId: <%= @group.id %>,
+    draggable: false,
+    latitude: '<%= @group.try(:latitude) %>',
+    longitude: '<%= @group.try(:longitude) %>',
+  };
+</script>

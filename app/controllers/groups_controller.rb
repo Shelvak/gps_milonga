@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   # GET /groups
   def index
     @title = t('view.groups.index_title')
-    @groups = Group.all.page(params[:page])
+    @groups = group_scope.page(params[:page])
   end
 
   # GET /groups/1
@@ -78,5 +78,9 @@ class GroupsController < ApplicationController
 
     def update_group_params
       params.require(:group).permit(:name, :longitude, :latitude)
+    end
+
+    def group_scope
+      current_user.admin? ? Group.all : current_user.groups
     end
 end

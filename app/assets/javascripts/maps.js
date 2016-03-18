@@ -4,9 +4,15 @@ new Rule({
     },
     load: function() {
         var helper = {},
+            mapConfigs = window.mapConfigs,
             configs = {
-                groupId: 1, // just to test
+                draggable: mapConfigs.draggable,
+                groupId: mapConfigs.groupId,
                 locations: {},
+                meetingPoint: {
+                    latitude: mapConfigs.latitude,
+                    longitude: mapConfigs.longitude
+                }
             };
 
         helper.addPoint = function (map, mapPosition, draggable, title) {
@@ -54,13 +60,22 @@ new Rule({
             }
         }
 
-        helper.askForNewFriends = function () {
+        helper.askForFriends = function (e) {
+            var input = $(this),
+                spinner = $('.spinner')
+
+            e.preventDefault()
+
+            input.hide()
+            spinner.show()
             $.ajax({
                 url: '/groups/' + configs.groupId + '/near_people',
                 type: 'GET',
                 dataType: 'JSON',
                 complete: helper.populateWithNewPoints
             });
+            input.show()
+            spinner.hide()
         };
 
         helper.setPointValues = function(point) {
@@ -73,9 +88,8 @@ new Rule({
             }
         };
 
-        helper.getPosition = function() {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var mapPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        helper.createMap = function(position) {
+            var mapPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
                     map = new google.maps.Map(document.getElementById('map'), {
                         zoom: 16,
                         center: mapPosition,
@@ -84,7 +98,7 @@ new Rule({
                         scaleControl: true,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     }),
-                    marker = helper.addPoint(map, mapPosition, true, 'MilongaPlace');
+                    marker = helper.addPoint(map, mapPosition, configs.draggable, 'MilongaPlace');
 
                 configs.map = map;
                 configs.mapPosition = mapPosition;
@@ -95,11 +109,24 @@ new Rule({
                     map.panTo(point);
                     // Update the textbox
                     helper.setPointValues(point);
+                })
+
+        }
+
+        helper.getPosition = function() {
+            if (configs.meetingPoint)
+                helper.createMap({
+                    coords: {
+                        latitude: configs.meetingPoint.latitude,
+                        longitude: configs.meetingPoint.longitude
+                    }
                 });
-            });
+            else{
+                navigator.geolocation.getCurrentPosition(helper.createMap)
+            };
         };
 
         $(document).on('ready', helper.getPosition);
-        setInterval(helper.askForNewFriends, 10000);
+        $(document).on('click', '.ask-for-friends', helper.askForFriends);
     }
 })

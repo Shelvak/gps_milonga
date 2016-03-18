@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :locations
 
+
   def to_s
     self.username
   end
@@ -38,5 +39,9 @@ class User < ActiveRecord::Base
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end
+  end
+
+  def groups
+    Group.where("ARRAY[user_ids] @> ARRAY[':user_id']", user_id: self.id)
   end
 end
