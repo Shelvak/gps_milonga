@@ -26,11 +26,17 @@ class GroupsController < ApplicationController
   # POST /groups
   def create
     @title = t('view.groups.new_title')
-    @group = Group.new(create_group_params)
+    _params = create_group_params
+    notification = _params.delete(:notification)
+    @group = Group.new(_params)
 
     respond_to do |format|
       if @group.save
         format.html { redirect_to @group, notice: t('view.groups.correctly_created') }
+
+        if notification
+          `curl `
+        end
       else
         format.html { render action: 'new' }
       end
@@ -71,13 +77,9 @@ class GroupsController < ApplicationController
     end
 
     def create_group_params
-      _params = params.require(:group).permit(:name, :longitude, :latitude)
+      _params = params.require(:group).permit(:name, :longitude, :latitude, :notification)
       _params[:owner_id] = current_user.id
       _params
-    end
-
-    def update_group_params
-      params.require(:group).permit(:name, :longitude, :latitude)
     end
 
     def group_scope

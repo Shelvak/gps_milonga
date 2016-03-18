@@ -3,7 +3,8 @@ new Rule({
         return window.loggedIn === true;
     },
     load: function() {
-        var reportPosition = function() {
+        var reportPosition = function(isNotification) {
+            isNotification = isNotification || false
             navigator.geolocation.getCurrentPosition(function(position) {
                 $.ajax({
                     url: '/locations',
@@ -12,6 +13,7 @@ new Rule({
                         'location': {
                             latitude: position.coords.latitude,
                             longitude: position.coords.longitude,
+                            notification: isNotification
                         }
                     }
                 });
@@ -19,5 +21,11 @@ new Rule({
         };
 
         setInterval(reportPosition, 30000);
+
+        var notify = function() {
+            reportPosition(true);
+        }
+
+        $(document).on('click', '.notify-friends', notify);
     }
 });

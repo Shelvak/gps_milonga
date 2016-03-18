@@ -25,3 +25,4 @@
 //= require bootstrap
 //= require maps
 //= require gps
+//= require push_state
