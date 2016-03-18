@@ -9,7 +9,7 @@ class Location < ActiveRecord::Base
 
   def as_json(options = nil)
     default_options = {
-      only: [:id, :latitude, :longitude],
+      only: [:id, :latitude, :longitude, :user_id],
       methods: [:title]
     }
 

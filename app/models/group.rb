@@ -12,6 +12,7 @@ class Group < ActiveRecord::Base
   end
 
   def last_locations_except_for_me(user)
+    puts self.users.map(&:id)
     self.users.where.not(id: user.id).map do |user|
       user.locations.order(id: :desc).first
     end.compact

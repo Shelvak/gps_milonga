@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only:  [:show, :edit, :update, :destroy, :near_people]
+  before_action :set_group, only:  [:show, :edit, :update, :destroy, :near_people, :arrive]
 
   # GET /groups
   def index
@@ -26,17 +26,11 @@ class GroupsController < ApplicationController
   # POST /groups
   def create
     @title = t('view.groups.new_title')
-    _params = create_group_params
-    notification = _params.delete(:notification)
-    @group = Group.new(_params)
+    @group = Group.new(create_group_params)
 
     respond_to do |format|
       if @group.save
         format.html { redirect_to @group, notice: t('view.groups.correctly_created') }
-
-        if notification
-          `curl `
-        end
       else
         format.html { render action: 'new' }
       end
@@ -68,6 +62,26 @@ class GroupsController < ApplicationController
     locations = @group.last_locations_except_for_me(current_user)
 
     render json: locations.to_json
+  end
+
+  def arrive
+    keys = User.all.map(&:id).map do |id|
+      Redis.new.get('chrome-subscription-' + id.to_s)
+    end.compact
+
+    uri = URI('https://android.googleapis.com/gcm/send')
+    https = Net::HTTP.new(uri.host, uri.port)
+    https.use_ssl = true
+    https.post(
+      uri.path,
+      { registration_ids: keys }.to_json,
+      {
+        'Content-Type' => 'application/json',
+        'Authorization' => 'key=AIzaSyBqaAUMIVlwrXdU2S-4MCUvestSNchsqF0'
+      }
+    )
+
+    render nothing: true
   end
 
   private

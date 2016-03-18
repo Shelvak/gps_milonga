@@ -8,12 +8,15 @@ new Rule({
             configs = {
                 draggable: mapConfigs.draggable,
                 groupId: mapConfigs.groupId,
-                locations: {},
-                meetingPoint: {
+                locations: {}
+            };
+
+        if (mapConfigs.latitude && mapConfigs.longitude) {
+                configs.meetingPoint = {
                     latitude: mapConfigs.latitude,
                     longitude: mapConfigs.longitude
                 }
-            };
+        }
 
         helper.addPoint = function (map, mapPosition, draggable, title) {
             var optionsMarker = {
@@ -41,17 +44,17 @@ new Rule({
                     console.log("analizando...")
                     console.log(element)
                     position = [element.latitude, element.longitude]
-                    if (element.id in configs.locations) {
-                        if (!_.isEqual(configs.locations[element.id].lastPosition, position)) {
+                    if (element.user_id in configs.locations) {
+                        if (!_.isEqual(configs.locations[element.user_id].lastPosition, position)) {
                             newPosition = new google.maps.LatLng(position[0], position[1]);
-                            configs.locations[element.id].marker.setPosition(newPosition);
-                            configs.locations[element.id].lastPosition = position;
+                            configs.locations[element.user_id].marker.setPosition(newPosition);
+                            configs.locations[element.user_id].lastPosition = position;
                         }
                     } else {
                         mapPosition = new google.maps.LatLng(element.latitude, element.longitude)
                         marker = helper.addPoint(configs.map, mapPosition, false, element.title);
 
-                        configs.locations[element.id] = {
+                        configs.locations[element.user_id] = {
                             lastPosition: position,
                             marker: marker
                         };

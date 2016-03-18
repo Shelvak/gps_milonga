@@ -13,8 +13,8 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('push', function(event) {
     console.log('Received a push message', event);
 
-    var title = 'Llego un chavon.';
-    var body = 'El vieja te está esperando, apurate viteh.';
+    var title = 'Someone arrived.';
+    var body = 'One of your friends is already in the meeting point.';
     var icon = '/images/icon-192x192.png';
     var tag = 'simple-push-demo-notification-tag';
 

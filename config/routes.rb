@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   resources :invitations, :locations
   resources :groups do
-    get :near_people, on: :member
+    member do
+      get :near_people
+      put :arrive
+    end
   end
+
+  post 'api/subscription', controller: 'api', action: 'subscription'
+  get 'api/send_notification', controller: 'api', action: 'notify_friends'
 
   devise_for :users
 

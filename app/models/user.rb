@@ -42,6 +42,6 @@ class User < ActiveRecord::Base
   end
 
   def groups
-    Group.where("ARRAY[user_ids] @> ARRAY[':user_id']", user_id: self.id)
+    Group.where("ARRAY[user_ids] @> ARRAY[':user_id'] OR owner_id = :user_id", user_id: self.id)
   end
 end
